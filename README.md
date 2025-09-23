@@ -2,9 +2,10 @@
 
 ## This repository contains all my submissions for the RISC‑V Reference SoC Tapeout Program
 
-## 📌 Weekly Tasks links
+## 📌 Submissions
 
-| Week   | Task    | Title   |
-|--------|---------|---------|
-| Week 0 | Task 1 | [Summary of Video](week0/task1) |
-|        | Task 2 | [Tools installation](week0/task2)|
+| Day   | Topic                                   |
+|-------|----------------------------------------|
+| Day 0 | [Tools installation](week0)             |
+| Day 1 | [Introduction to Verilog RTL design and Synthesis](day1) |
+
