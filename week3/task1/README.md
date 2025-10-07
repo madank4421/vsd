@@ -29,6 +29,7 @@ The commands for accessing other directories are relative to this directory as s
 ```
 yosys
 ```
+![yosys](images/yosys.png)
 
 ## 2. Load Standard Cell and IP Libraries
 
@@ -38,6 +39,8 @@ read_liberty -lib src/lib/avsdpll.lib
 read_liberty -lib src/lib/avsddac.lib
 ```
 
+![read_liberty](images/read_liberty.png)
+
 ## 3. Read Verilog Source Files
 
 ```
@@ -45,6 +48,8 @@ read_verilog src/module/vsdbabysoc.v
 read_verilog -I src/include src/module/rvmyth.v
 read_verilog -I src/include src/module/clk_gate.v
 ```
+
+![read_verilog](images/read_verilog.png)
 
 ## 4. Perform Synthesis
 
@@ -76,6 +81,9 @@ dfflibmap -liberty src/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 opt
 abc -liberty src/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 ```
+
+![opt1](images/opt1.png)
+![opt2](images/opt2.png)
 
 ## 7. Flatten and Clean Design
 
