@@ -18,6 +18,10 @@ This document explains the process of performing post-synthesis simulation and v
 4. Post-synthesis simulation using iverilog
 5. Waveform analysis using GTKWave
 
+
+## ‼️Note: The entire workflow is done from the `/VSDBabySoC` directory
+The commands for accessing other directories are relative to this directory as specified in this report. To view the Directory structure [click here](/week2/lab/README.md#Setting-up-Project-directory)
+
 ## Yosys Synthesis Flow
 
 ## 1. Launch Yosys
