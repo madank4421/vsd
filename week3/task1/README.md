@@ -1,4 +1,4 @@
-# Post-Synthesis and Verification of BabySoC
+# Week 3 Part 1 – Post-Synthesis GLS 
 
 This document explains the process of performing post-synthesis simulation and verification of the BabySoC design. The synthesis is carried out using **Yosys**, and the verification is done using **Icarus Verilog (iverilog)** to observe and analyze the waveform output.
 
@@ -96,7 +96,7 @@ stat
 
 ![stat2](images/stat2.png)
 
-## 9. Write Synthesized Netlist
+## 9. Write Synthesized Netlist to `vsdbabysoc.synth.v` file
 
 ```
 write_verilog -noattr output/post_synth_sim/vsdbabysoc.synth.v
@@ -145,6 +145,10 @@ gtkwave post_synth_sim.vcd
 
 ## Comparing Pre-Synthesis and Post-Synthesis Simulation
 
+# Pre-synthesis simulation
 ![gtkwave_pre_synth](images/gtkwave_pre_synth.png)
 
+# Post-synthesis simulation
 ![gtkwave_post_synth](images/gtkwave_post_synth.png)
+
+In the Post-Synthesis simulation waveform, the analog output (OUT) from the DAC increases as the input digital value from the RVMYTH CPU increases and decreases as the input value decreases. This behavior closely matches the Pre-Synthesis simulation waveform. Therefore, the synthesized netlist successfully preserves the functionality of the original design.
