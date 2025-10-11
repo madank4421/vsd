@@ -103,7 +103,7 @@ Ensures stable and synchronized clock distribution across the design.
 
 # 3. Clk-to-q delay, library setup, hold time and jitter
 
-![Alt text](images/master-slave.png)
+![Alt text](images/master_slave.png)
 
 - Setup time: Time required for a data to stabilize before the next clock edge.  
   - In our example, setup time = 3 inverter delays + 1 transmission gate delay.
