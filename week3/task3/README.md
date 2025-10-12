@@ -1,5 +1,5 @@
 
-# Week 3 Task 3 - Generate Timing Graphs with OpenSTA
+# Week 3 Part 3 - Generate Timing Graphs with OpenSTA
 
 ## Installation of OpenSTA
 Follow these steps to install OpenSTA on your system:
