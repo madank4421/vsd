@@ -11,7 +11,10 @@ git clone https://github.com/The-OpenROAD-Project/OpenSTA.git
 # Navigate into the repository
 cd OpenSTA  
 
-# Create and navigate to the build directory
+# Create build directory
+mkdir build
+
+# navigate to the build directory
 cd build  
 
 # Configure the build using CMake
@@ -101,7 +104,7 @@ Error: /home/madank/OpenSTA/examples/timing_libs/avsdpll.lib line 54, syntax err
 
 ![error](images/error.png)
 
-Open avsdpll.lib and comment line 54-60 and 68-78 as shown:
+Open avsdpll.lib and comment line 54-60 and 68-78 (only use multi-line comment /* */ ) as shown:
 
 ![change](images/change.png)
 
@@ -181,6 +184,33 @@ Now, `STA_OUTPUT/` directory is created inside `~/OpenSTA/examples/BabySoC/`
 | `sta_tns.txt` | Contains the total negative slack (TNS) accumulated over all corners |
 | `sta_wns.txt` | Contains the worst negative slack (WNS) found among all corners |
 
+
+
+Thus, the final directory structure looks something like this:
+
+```
+OpenSTA/
+└── examples/
+    ├── timing_libs/
+    │   ├── avsddac.lib  
+    │   ├── avsdpll.lib  
+    │   ├── sky130_fd_sc_hd__tt_025C_1v80.lib
+    │   └── skywater-pdk-libs-sky130_fd_sc_hd/
+    │       ├── sky130_fd_sc_hd__tt_025C_1v80.lib
+    │       ├── sky130_fd_sc_hd__ff_100C_1v65.lib
+    │       ├── sky130_fd_sc_hd__ff_100C_1v95.lib
+    │       └── ...
+    │
+    └── BabySoC/
+        ├── cd_sky130hd.sdc
+        ├── vsdbabysoc_synthesis.sdc 
+        ├── vsdbabysoc.synth.v
+        └── STA_OUTPUT/
+            ├── min_max_sky130_fd_sc_hd__ff_100C_1v65.lib.txt
+            ├── min_max_sky130_fd_sc_hd__ff_100C_1v95.lib.txt
+            ├── min_max_sky130_fd_sc_hd__tt_025C_1v80.lib.txt
+            └── ...
+```
 
 
 STA For this timing library, `min_max_sky130_fd_sc_hd__tt_025C_1v80.lib.txt` :
