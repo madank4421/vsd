@@ -239,3 +239,6 @@ These techniques give a more realistic and conservative analysis.
 
 - Similar to setup analysis, additional pessimism arises due to different delays of the same components, which needs to be removed.
 
+# CERTIFICATE
+
+![Alt text](images/certificate.png)
