@@ -17,3 +17,7 @@
 | [Week 2](week2/) | 
 | Day 6 | [BabySoC - Conceptual understanding](week2/theory/) |
 | Day 7 | [BabySoC - Hands-on Functional Modelling](week2/lab/) |
+| [Week 3](week3/) | 
+| Day 8 | [Post-Synthesis GLS](week3/task1/) |
+| Day 9 | [Fundamentals of STA (Static Timing Analysis)](week3/task2/) |
+| Day 10 | [Generate Timing Graphs with OpenSTA](week3/task3/) |
