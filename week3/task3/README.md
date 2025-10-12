@@ -30,7 +30,7 @@ After installation, you can launch OpenSTA by running:
 sta
 ```
 
-![OpenSTA Screenshot](images/aaaaaaaa.png)
+![OpenSTA Screenshot](images/sta.png)
 
 ## Example Directory Structure
 
