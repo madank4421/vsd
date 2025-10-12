@@ -92,6 +92,13 @@ source ~/OpenSTA/examples/BabySoC/vsdbabysoc_min_max_delays.tcl
 
 If an error is encountered like this:
 
+```
+Warning: /home/madank/OpenSTA/examples/timing_libs/sky130_fd_sc_hd__tt_025C_1v80.lib line 23, default_fanout_load is 0.0.
+Warning: /home/madank/OpenSTA/examples/timing_libs/sky130_fd_sc_hd__tt_025C_1v80.lib line 1, library sky130_fd_sc_hd__tt_025C_1v80 already exists.
+Warning: /home/madank/OpenSTA/examples/timing_libs/sky130_fd_sc_hd__tt_025C_1v80.lib line 23, default_fanout_load is 0.0.
+Error: /home/madank/OpenSTA/examples/timing_libs/avsdpll.lib line 54, syntax error
+```
+
 ![error](images/error.png)
 
 Open avsdpll.lib and comment line 54-60 and 68-78 as shown:
