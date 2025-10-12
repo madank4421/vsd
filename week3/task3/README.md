@@ -183,7 +183,7 @@ Now, `STA_OUTPUT/` directory is created inside `~/OpenSTA/examples/BabySoC/`
 
 
 
-For example, `min_max_sky130_fd_sc_hd__tt_025C_1v80.lib.txt` :
+STA For this timing library, `min_max_sky130_fd_sc_hd__tt_025C_1v80.lib.txt` :
 
 ```
 Warning: sta_across_pvt.tcl line 25, unknown field nets.
@@ -244,6 +244,22 @@ Fanout       Cap      Slew     Delay      Time   Description
 
 
 ```
+
+The critical path in the design is identified as the path from flip-flop _9085_ to flip-flop _8462_, which corresponds to the maximum delay path (setup analysis). This path has the highest data arrival time relative to the data required time, making it the most timing-sensitive path in the design.
+
+The slack values indicate whether timing requirements are met:
+
+Positive slack signifies that the data arrives at the endpoint flip-flop before the required time, meaning the timing constraints are satisfied.
+
+Negative slack indicates a timing violation, where the data does not arrive within the required window.
+
+For the reported paths:
+
+The path _9108_ to _8046_ has a slack of 0.3096 ns, indicating timing is met.
+
+The path _9085_ to _8462_ has a slack of 2.2603 ns, also indicating timing is met, but as it represents the maximum delay path, it is identified as the critical path that defines the maximum operating frequency of the design.
+
+
 
 
 ### Table:
