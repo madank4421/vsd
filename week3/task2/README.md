@@ -241,4 +241,4 @@ These techniques give a more realistic and conservative analysis.
 
 # CERTIFICATE
 
-![Alt text](images/certificate.png)
+![Alt text](images/certificate.jpg)
