@@ -258,6 +258,6 @@ Fanout       Cap      Slew     Delay      Time   Description
 
 ![worst_setup](images/worst_hold_graph.png)
 
-![wns](images/wns.png)
+![wns](images/wns_graph.png)
 
-![tns](images/tns.png)
+![tns](images/tns_graph.png)
