@@ -14,7 +14,8 @@ gedit day1_nfet_idvds_L2_W5.spice
 ![image](images/nmos_analysis_code.png)
 
 ```
-ngspice day1_nfet_idvds_L2_W5.spice 
+ngspice day1_nfet_idvds_L2_W5.spice
+plot -vdd#branch
 ```
 ![image](images/nmos_analysis_terminal.png)
 
