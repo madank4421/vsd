@@ -47,4 +47,4 @@ $ make
 $ sudo make install
 ```
 
-![Alt text](images/ngspice.png)
+![Alt text](images/ngspice_installation.png)
