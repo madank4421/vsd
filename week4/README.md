@@ -10,7 +10,7 @@ Let us understand the DC behavior of an NMOS transistor and its response to vary
 cd sky130CircuitDesignWorkshop/design
 gedit day1_nfet_idvds_L2_W5.spice 
 ```
-### Code
+### SPICE Code
 
 ![image](images/nmos_analysis_code.png)
 
@@ -103,7 +103,7 @@ Let us simulate the circuit behavior.
 
 Let us examine the behaviour of the Id current with respect to Vds after reducing the channel length (L) of the NMOS ans maintaining the same W/L ratio. Ideally, The drain current must be similar to the previous case. but due to short shannal effect and velocity saturation, that is not the case.
 
-### Code
+### SPICE Code
 ![image](images/idvds_code.png)
 
 We have reduced the Length but maintained same W/L ratio by reducing width too.
@@ -131,7 +131,7 @@ Here, The drain current (I<sub>D</sub>) of an NMOS transistor was observed as a 
 
 Similarly, Let us examine the behaviour of the Id current with respect to Vin after reducing the channel length (L) of the NMOS ans maintaining the same W/L ratio. Ideally, The drain current must be similar to the previous case (that is, the relationship should be quadratic). But the relationship between drain current and input voltage Vin is linear.
 
-### Code
+### SPICE Code
 
 ![image](images/idvgs_code.png)
 
@@ -156,5 +156,131 @@ In this experiment, the drain current (I<sub>D</sub>) of an NMOS transistor was 
 | **Before Scaling (L = 200 nm)** | **After Scaling (L = 150 nm)** |
 |:-------------------------------:|:------------------------------:|
 | <img src="images/day1_idvgs_plot.png" width="400"/> | <img src="images/idvgs_plot.png" width="400"/> |
+
+
+
+## CMOS inverter - Voltage Transfer Characteristics
+
+The voltage transfer characteristics of a CMOS Inverter is a plot that shows the relationship between the output voltage ($V_{out}$) and the corresponding steady-state (DC) input voltage ($V_{in}$) of the inverter. It essentially maps every possible input voltage level to the resulting output voltage level, defining the inverter's voltage-level response.
+
+### SPICE Code
+
+day3_inv_vtc_Wp084_Wn036.spice
+
+```
+*Model Description
+.param temp=27
+
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+
+*Netlist Description
+
+
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=0.84 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.36 l=0.15
+
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+
+.dc Vin 0 1.8 0.01
+
+.control
+run
+setplot dc1
+display
+.endc
+
+.end
+```
+
+let us plot the out vs in graph
+
+```
+ngspice day3_inv_vtc_Wp084_Wn036.spice
+plot out vs in
+```
+
+### Plot
+
+![image](images/day3_inv_vtc_terminal.png)
+
+![image](images/day3_inv_vtc_plot.png)
+
+### Observation
+Here, the output swings between 1.8 V, corresponding to $V_{dd}$, and 0 V ($V_{ss}$). The plot demonstrates the circuit's inverting function: when $V_{in}$ is low (near 0 V), $V_{out}$ is high (1.8 V), and conversely, when $V_{in}$ is high (near 1.8 V), $V_{out}$ is low (0 V). The transition between these high and low output states is exceptionally steep, indicating a high voltage gain in this region. This sharp switching occurs at a specific input voltage, the switching threshold ($V_M$), which is observed to be at approximately $V_{in} = 0.85$ V.
+
+### Switching Threshold $$V_m$$
+
+At 50% of the out voltage, find the corresponding in voltage. That is the switching Threshold. Or to find accurate Switching Threshold, Draw a line y=x and the point of intersection of the VTC curve and the line is the switching threshold.
+
+
+![image](images/day3_inv_finding_vm_value.png)
+
+![image](images/day3_vm_value.png)
+
+Switching threshold ($V_m$) = 0.87 V
+
+
+### Switching Threshold $$V_m$$ and $$(\frac{W_p}{L_p})$$ : $$(\frac{W_n}{L_n})$$ Ratio
+
+When the  $$V_m$$ and $$(\frac{W_p}{L_p})$$ : $$(\frac{W_n}{L_n})$$ Ratio is Increased The value of Switching threshold increases. This is observed by simulating in ngspice.
+
+### SPICE Code
+
+![image](images/day3_inv_vtc_2x_code.png)
+
+```
+ngspice day3_inv_vtc_Wp168_Wn036.spice
+plot out vs in
+```
+
+### Plot
+
+![image](images/day3_inv_vtc_2x_terminal.png)
+
+![image](images/day3_inv_vtc_2x_plot.png)
+
+### Observation
+Here, the width of the PMOS transistor is increased, and it can be noted that the switching threshold ($V_m$) has increased slightly from the previous design.
+
+![image](images/day3_inv_vtc_2x_value.png)
+
+Switching threshold ($V_m$) = 0.90 V
+
+Further increasing, 
+
+### SPICE Code
+
+![image](images/day3_inv_vtc_3x_code.png)
+
+```
+ngspice day3_inv_vtc_Wp252_Wn036.spice
+plot out vs in
+```
+
+### Plot
+
+![image](images/day3_inv_vtc_3x_terminal.png)
+
+![image](images/day3_inv_vtc_3x_plot.png)
+
+### Observation
+Here, the width of the PMOS transistor is increased, and it can be noted that the switching threshold ($V_m$) has increased slightly from the previous design.
+
+![image](images/day3_inv_vtc_3x_value.png)
+
+Switching threshold ($V_m$) = 0.93 V
+
+
 
 
