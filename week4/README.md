@@ -446,3 +446,207 @@ $$NM_H = V_{OH} - V_{IH}$$
 $$NM_L = V_{IL} - V_{OL}$$
       = 0.766 - 0.106
       = 0.66 V
+
+
+
+# Supply voltage variations
+
+With variation in supply voltage, the Voltage Transfer Characteristics of the CMOS inverter varies. When the supply voltage increases, the Switching threshold ($V_m$) and Noise Margin ($$NM_H$$ and $$NM_L$$) also increases.
+
+### SPICE Code
+
+```
+*Model Description
+.param temp=27
+
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+
+*Netlist Description
+
+
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=1 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.36 l=0.15
+
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+.control
+
+let powersupply = 1.8
+alter Vdd = powersupply
+	let voltagesupplyvariation = 0
+	dowhile voltagesupplyvariation < 6
+	dc Vin 0 1.8 0.01
+	let powersupply = powersupply - 0.2
+	alter Vdd = powersupply
+	let voltagesupplyvariation = voltagesupplyvariation + 1
+      end
+ 
+plot dc1.out vs in dc2.out vs in dc3.out vs in dc4.out vs in dc5.out vs in dc6.out vs in xlabel "input voltage(V)" ylabel "output voltage(V)" title "Inveter dc characteristics as a function of supply voltage"
+
+.endc
+
+.end
+```
+
+### Plot
+
+![images](images/day5_supply_terminal.png)
+
+![images](images/day5_supply_plot.png)
+
+### Observation
+
+As expected, When the supply voltage decreases, the Switching threshold ($V_m$) and Noise Margin ($$NM_H$$ and $$NM_L$$) also decreases. Similarly, The Gain of the CMOS inverter increases when the supply voltage decreases. But there are also downsides when it comes to decreasing the supply voltage.
+
+## Transiwnt analysis with different supply voltages
+
+To understand the downside, let us perform transient analysis with different supply voltage (Vdd = 1.8 V and 0.8 V) for example.
+
+### SPICE Code (Vdd = 1.8 V)
+
+![images](images/day5_supply1_code.png)
+
+### Plot
+
+![images](images/day5_supply1_terminal.png)
+
+![images](images/day5_supply1_plot.png)
+
+
+### SPICE Code (Vdd = 0.8 V)
+
+![images](images/day5_supply2_code.png)
+
+### Plot
+
+![images](images/day5_supply2_terminal.png)
+
+![images](images/day5_supply2_plot.png)
+
+
+### Comparing
+
+| **Vdd = 1.8 V** | **Vdd = 0.8 V** |
+|:-------------------------------:|:------------------------------:|
+| <img src="images/day5_supply1_plot.png" width="400"/> | <img src="images/day5_supply2_plot.png" width="400"/> |
+
+
+### Observation
+
+As we can see, when the supply voltage $$V_{DD}$$ is decreased, the current driving capability of the transistors reduces. This means the time required to charge or discharge the load capacitance $$C_{load}$$ increases, resulting in slower output transitions. Consequently, the output voltage may not reach the full logic levels within the desired time, and the inverter is not properly driven, which can degrade the overall performance of the digital circuit.
+
+
+# Device process variations
+
+To understand the effect of device process variations on inverter behavior, we analyze the voltage transfer characteristic (VTC) by simulating the inverter with different transistor widths, $$W_p$$ for PMOS and $$W_n$$ for NMOS. By varying these widths, we can observe changes in the switching threshold $$V_m$$,  and overall performance in terms of logic levels and transition sharpness, as well as the noise margins $$NM_H$$ and $$NM_L$$. This analysis provides insight into how process variations impact the CMOS inverter and helps in designing more robust digital circuits.
+
+ 
+### SPICE Code  (Wp = 7 and Wn = 0.42)
+
+```
+*Model Description
+.param temp=27
+
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+
+*Netlist Description
+
+
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=7 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.42 l=0.15
+
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+
+.dc Vin 0 1.8 0.01
+
+.control
+run
+setplot dc1
+display
+.endc
+
+.end
+```
+
+### Plot
+
+![images](images/day5_device_terminal.png)
+
+![images](images/day5_device_plot.png)
+
+### SPICE Code  (Wp = 0.84 and Wn = 0.36)
+
+```
+*Model Description
+.param temp=27
+
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+
+*Netlist Description
+
+
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=0.84 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.36 l=0.15
+
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+
+.dc Vin 0 1.8 0.01
+
+.control
+run
+setplot dc1
+display
+.endc
+
+.end
+```
+
+### Plot
+
+![images](images/day3_inv_vtc_plot.png)
+
+### Compare
+
+| **Wp = 7 and Wn = 0.42** | **Wp = 0.84 and Wn = 0.36** |
+|:-------------------------------:|:------------------------------:|
+| <img src="images/day5_device_plot.png" width="400"/> | <img src="images/day3_inv_vtc_plot.png" width="400"/> |
+
+
+### Observation
+
+As the transistor widths increase, the switching threshold $$V_m$$ of the CMOS inverter also increases. This is because increasing the PMOS width $$W_p$$ strengthens the pull-up network, while increasing the NMOS width $$W_n$$ strengthens the pull-down network. By adjusting these widths, the point at which the inverter output switches from high to low shifts, affecting the logic levels and the noise margins $$NM_H$$ and $$NM_L$$. Studying the voltage transfer characteristic (VTC) for different width combinations helps us understand how device sizing and process variations influence the inverter's performance.
+
+
+
+
+
+
