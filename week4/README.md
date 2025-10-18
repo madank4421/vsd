@@ -224,8 +224,6 @@ Here, the output swings between 1.8 V, corresponding to $V_{dd}$, and 0 V ($V_{s
 At 50% of the out voltage, find the corresponding in voltage. That is the switching Threshold. Or to find accurate Switching Threshold, Draw a line y=x and the point of intersection of the VTC curve and the line is the switching threshold.
 
 
-![image](images/day3_inv_finding_vm_value.png)
-
 ![image](images/day3_vm_value.png)
 
 Switching threshold ($V_m$) = 0.87 V
