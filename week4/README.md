@@ -1,6 +1,6 @@
-# WEEK 4 Ngspice Sky130
+# WEEK 4 CMOS Circuit Design (sky130-style) 
 
-To install Ngspice, follow the steps mentioned [here](/week0/task2/README.md#ngspice)
+**To install Ngspice, follow the steps mentioned [here](/week0/task2/README.md#ngspice)**
 
 # NMOS Analysis
 
