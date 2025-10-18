@@ -335,13 +335,19 @@ plot out vs time in
 ### Observation
 Here, The out is inverted version of in. The out is not perfectly inverted, And it takes a delay to follow the input. The rise and fall delay of the output can be calculated by finding the time interval between 50% of the input value and 50% of the output value.
 
-### Rise delay
+### Rise delay and Fall delay
 
 ![image](images/day3_vout_find_delay.png)
+
+### Rise Delay
+
+![image](images/day3_vout_time_rise_delay.png)
 
 Rise delay = 2.482 - 2.149 = 0.333 ps
 
 ### Fall delay
+
+![image](images/day3_vout_time_fall_delay.png)
 
 Fall delay = 4.334 - 4.050 = 0.284 ps
 
@@ -371,17 +377,10 @@ Based on these points, the two noise margins are defined as:
 
     $$NM_H = V_{OH} - V_{IH}$$
 
-    For a CMOS inverter (where $V_{OH} = V_{dd}$):
-    **$$NM_H = V_{dd} - V_{IH}$$**
-
 2.  **Noise Margin Low ($NM_L$)**
     This is the "safety buffer" for the logic '0' state. It's the difference between the low input voltage ($V_{IL}$) the gate will accept and the low output voltage ($V_{OL}$) from the previous gate.
 
     $$NM_L = V_{IL} - V_{OL}$$
-
-    For a CMOS inverter (where $V_{OL} = 0$ V):
-    **$$NM_L = V_{IL}$$**
-
 
 ### SPICE Code
 
