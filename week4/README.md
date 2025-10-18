@@ -226,7 +226,7 @@ At 50% of the out voltage, find the corresponding in voltage. That is the switch
 
 ![image](images/day3_vm_value.png)
 
-Switching threshold ($V_m$) = 0.87 V
+Switching threshold ($V_m$) = 0.877 V
 
 
 ### Switching Threshold $$V_m$$ and $$(\frac{W_p}{L_p})$$ : $$(\frac{W_n}{L_n})$$ Ratio
@@ -253,7 +253,7 @@ Here, the width of the PMOS transistor is increased, and it can be noted that th
 
 ![image](images/day3_inv_vtc_2x_value.png)
 
-Switching threshold ($V_m$) = 0.90 V
+Switching threshold ($V_m$) = 0.903 V
 
 Further increasing, 
 
@@ -277,7 +277,7 @@ Here, the width of the PMOS transistor is increased, and it can be noted that th
 
 ![image](images/day3_inv_vtc_3x_value.png)
 
-Switching threshold ($V_m$) = 0.93 V
+Switching threshold ($V_m$) = 0.928 V
 
 # Vout vs Time, Vin
 
