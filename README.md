@@ -21,3 +21,5 @@
 | Day 8 | [Post-Synthesis GLS](week3/task1/) |
 | Day 9 | [Fundamentals of STA (Static Timing Analysis)](week3/task2/) |
 | Day 10 | [Generate Timing Graphs with OpenSTA](week3/task3/) |
+| [Week 4](week4/) |
+| Week 4 | [CMOS Circuit Design (sky130-style)](week4/README.md) |
