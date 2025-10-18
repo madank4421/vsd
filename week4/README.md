@@ -2,7 +2,7 @@
 
 To install Ngspice, follow the steps mentioned [here](/week0/task2/README.md#ngspice)
 
-## NMOS Analysis
+# NMOS Analysis
 
 Let us understand the DC behavior of an NMOS transistor and its response to varying voltages especially how the NMOS transistor conducts when gate (Vin) and drain (Vdd) voltages change, by designing a simple nmose circuit and obtaining SPICE simulation
 
@@ -36,7 +36,7 @@ As Vin (gate-to-source voltage) increases, the output current rises until it rea
 Similarly, increasing Vdd results in a higher output current, reflecting the transistor’s dependence on the drain-to-source voltage.
 
 
-## Analysing MOSFET
+# Analysing MOSFET
 
 Short Channel Effect and Velocity Saturation
 
@@ -99,7 +99,7 @@ $$
 
 Let us simulate the circuit behavior.
 
-## Id vs Vds of NMOS After reducing Channel length (From 200nm to 150nm)
+# Id vs Vds of NMOS After reducing Channel length (From 200nm to 150nm)
 
 Let us examine the behaviour of the Id current with respect to Vds after reducing the channel length (L) of the NMOS ans maintaining the same W/L ratio. Ideally, The drain current must be similar to the previous case. but due to short shannal effect and velocity saturation, that is not the case.
 
@@ -127,7 +127,7 @@ Here, The drain current (I<sub>D</sub>) of an NMOS transistor was observed as a 
 |:-------------------------------:|:------------------------------:|
 | <img src="images/day1_plot.png" width="400"/> | <img src="images/day2_plot.png" width="400"/> |
 
-## Id vs Vin of NMOS After reducing Channel length (From 200nm to 150nm)
+# Id vs Vin of NMOS After reducing Channel length (From 200nm to 150nm)
 
 Similarly, Let us examine the behaviour of the Id current with respect to Vin after reducing the channel length (L) of the NMOS ans maintaining the same W/L ratio. Ideally, The drain current must be similar to the previous case (that is, the relationship should be quadratic). But the relationship between drain current and input voltage Vin is linear.
 
@@ -159,7 +159,7 @@ In this experiment, the drain current (I<sub>D</sub>) of an NMOS transistor was 
 
 
 
-## CMOS inverter - Voltage Transfer Characteristics
+# CMOS inverter - Voltage Transfer Characteristics
 
 The voltage transfer characteristics of a CMOS Inverter is a plot that shows the relationship between the output voltage ($V_{out}$) and the corresponding steady-state (DC) input voltage ($V_{in}$) of the inverter. It essentially maps every possible input voltage level to the resulting output voltage level, defining the inverter's voltage-level response.
 
@@ -279,7 +279,7 @@ Here, the width of the PMOS transistor is increased, and it can be noted that th
 
 Switching threshold ($V_m$) = 0.93 V
 
-## Vout vs Time and Vin
+# Vout vs Time, Vin
 
 Let us Change the value of in with respect to time and note the output out signal. 
 
@@ -352,7 +352,7 @@ Rise delay = 2.482 - 2.149 = 0.333 ps
 Fall delay = 4.334 - 4.050 = 0.284 ps
 
 
-## Noise Margin
+# Noise Margin
 
 Noise margin is a measure of a digital logic circuit's robustness against voltage noise. It defines the maximum "noise" voltage that can be added to or subtracted from an input signal before the logic gate's output value becomes incorrect or indeterminate. A larger noise margin means the circuit is more reliable and less likely to be upset by noise from sources like power supply fluctuations or crosstalk.
 
