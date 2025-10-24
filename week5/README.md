@@ -1,9 +1,7 @@
 # Week 5 Task – OpenROAD Flow Setup and Floorplan + Placement
 
-## OpenROAD Installation Guide
 
-This document provides step-by-step instructions to **build and install OpenROAD locally** on your machine.
-
+## 1. OpenROAD Installation Guide
 
 ## Steps to Install OpenROAD
 
@@ -53,7 +51,7 @@ openroad
 
 
 
-## Floor Planning and Placement
+## 2. Floor Planning and Placement
 
 Let us demonstrate floor planning using the **`gcd_nangate45.v`** design provided as an example in the [OpenROAD GitHub repository](https://github.com/The-OpenROAD-Project/OpenROAD/test/gcd_nangate45.v).
 
