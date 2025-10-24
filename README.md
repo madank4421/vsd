@@ -23,3 +23,6 @@
 | Day 10 | [Generate Timing Graphs with OpenSTA](week3/task3/) |
 | [Week 4](week4/) |
 | Week 4 | [CMOS Circuit Design (sky130-style)](week4/README.md) |
+| [Week 5](week5/) |
+| Week 5 | [OpenROAD Flow Setup and Floorplan + Placement](week5/README.md) |
+
