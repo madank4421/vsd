@@ -53,7 +53,7 @@ openroad
 
 ## 2. Floor Planning and Placement
 
-Let us demonstrate floor planning using the **`gcd_nangate45.v`** design provided as an example in the [OpenROAD GitHub repository](https://github.com/The-OpenROAD-Project/OpenROAD/test/gcd_nangate45.v).
+Let us demonstrate floor planning using the **`gcd_nangate45.v`** design provided as an example in the [OpenROAD GitHub repository](https://github.com/The-OpenROAD-Project/OpenROAD/blob/master/test/gcd_nangate45.v).
 
 
 The flow_helper.tcl script serves as a supporting utility in the OpenROAD design flow. It defines key helper procedures for reading technology and standard cell libraries, checking for macro cells, adjusting layer resistance and capacitance values, and setting timing constraints like input/output delays. This script ensures consistent environment setup across different stages of the flow.
