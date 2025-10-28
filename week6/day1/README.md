@@ -190,6 +190,14 @@ $$
 \text{Flop Ratio} = \frac{\text{Number of D Flip-Flops}}{\text{Total Number of Cells}}
 $$
 
+$$
+\text{Flop Ratio} = \frac{1613}{14876}
+$$
+
+$$
+\text{Flop Ratio} = 0.108
+$$
+
 A higher flop ratio indicates a design with more sequential logic, whereas a lower ratio suggests a design that is more combinational in nature.
 In OpenLANE, this value can be observed in the synthesis report generated after running the `run_synthesis` command.
 
