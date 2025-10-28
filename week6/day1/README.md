@@ -176,7 +176,7 @@ run_synthesis
 
 ![image](images/run_synthesis2.png)
 
-![image](images/run_synthesis1.png)
+![image](images/run_synthesis.png)
 
 We can see the cells synthesized in the print statistics area. As we can see, the number of cells synthesized and the number of flip flops synthesized can be observed
 
