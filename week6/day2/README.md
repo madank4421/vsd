@@ -197,3 +197,68 @@ Let us zoom and observe the standard cells:
 
 These standard cells will be placed properly during placement stage.
 
+
+Here’s your **Placement and Routing** section rewritten in the same Markdown structure and tone as your previous notes, with explanations and commands formatted clearly:
+
+---
+
+## Placement and Routing
+
+This stage focuses on mapping the synthesized netlist to the physical layout by assigning exact locations to each standard cell and optimizing their arrangement for wire length, congestion, and signal integrity.
+
+
+#### 1. Binding the Netlist with Physical Cells
+
+During placement, the synthesized **netlist** (logical representation of the circuit) is bound to **physical standard cells** from the standard cell library.
+Each logical instance in the netlist is assigned a specific physical cell that implements its function.
+
+
+#### 2. Placement
+
+The placement process determines the exact coordinates of each standard cell inside the chip’s core area.
+It is performed in two stages:
+
+* **Global placement:** Cells are placed approximately to minimize total wire length and congestion.
+* **Detailed placement:** Adjusts the cells to legal positions aligned to placement rows without overlaps.
+
+
+#### 3. Placement Optimization
+
+After initial placement, optimization is carried out to improve circuit performance and layout quality.
+
+* The tool estimates **wire length** and **capacitance** based on the current placement.
+* To maintain **signal integrity**, **repeaters (buffers)** may be inserted to reduce delay and ensure proper signal propagation across long interconnects.
+
+At this stage, we focus primarily on achieving **congestion-free placement**, while **timing optimization** will be addressed in later stages.
+
+### Command to Run Placement
+
+In the OpenLANE interactive shell, execute:
+
+```tcl
+run_placement
+```
+
+![image](images/run_placement.png)
+
+This command performs global and detailed placement, producing a placed DEF file and log files under the run directory.
+
+### Viewing Placement in Magic
+
+To visualize the placement result using **Magic**, run:
+
+```bash
+magic -T ~/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &
+```
+
+This opens the layout in Magic, allowing you to observe how standard cells are arranged inside the core region after placement.
+
+
+![image](images/magic_placement.png)
+
+![image](images/magic_placement_zoomed.png)
+
+As we can see, the standard cells are placed in the core.
+
+
+
