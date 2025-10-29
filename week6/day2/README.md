@@ -1,4 +1,4 @@
-# Day 2 – WORK IN PROGRESS... 🏗️
+# WEEK 6 - Day 2 – Good floorplan vs bad floorplan and introduction to library cells
 
 This section explains the key concepts and commands used during the **floorplanning** stage of the ASIC design flow using OpenLANE.
 
@@ -256,6 +256,85 @@ This opens the layout in Magic, allowing you to observe how standard cells are a
 As we can see, the standard cells are placed in the core. Selecting one of the standard cells and viewing the details in tkcon window using `what`
 
 ![image](images/magic_placement_tkcon.png)
+
+
+## Cell Design Flow
+
+The cell design flow involves transforming design specifications into a physical layout and generating library files required for ASIC design and characterization.
+
+## Inputs
+
+* PDK: DRC and LVS rules, SPICE models
+* Library and user-defined specifications
+
+## Design Steps
+
+1. Circuit design
+2. Layout design
+3. Characterization
+
+## Outputs
+
+* CDL (Circuit Description Language)
+* GDSII
+* LEF
+* Extracted SPICE netlist (.cir)
+
+
+## Characterization Flow for a CMOS Inverter
+
+1. Read the models and technology files
+2. Read the extracted SPICE netlist
+3. Recognize the behavior of the buffer
+4. Read the subcircuit (inverter composed of PMOS and NMOS devices)
+5. Attach the necessary power sources
+6. Apply the input stimulus (characterization setup)
+7. Provide the required output capacitance
+8. Specify the necessary simulation commands (.tran, .dc, etc.)
+
+All these inputs are then provided to a configuration file used by a characterization software called **GUNA**, which generates timing, noise, and power models.
+
+
+## Timing Characterization
+
+### Timing Threshold Definitions
+
+| Parameter            | Meaning                                                                                            | Typical Value |
+| -------------------- | -------------------------------------------------------------------------------------------------- | ------------- |
+| `slew_low_rise_thr`  | Lower voltage threshold used to measure rise time (when output voltage begins to rise).            | 20%           |
+| `slew_high_rise_thr` | Upper voltage threshold used to measure rise time (when output voltage reaches near steady state). | 80%           |
+| `slew_low_fall_thr`  | Lower voltage threshold used to measure fall time (when output voltage nears low state).           | 20%           |
+| `slew_high_fall_thr` | Upper voltage threshold used to measure fall time (when output voltage begins to fall).            | 80%           |
+| `in_rise_thr`        | Input voltage level considered as the switching point during a rising transition.                  | 50%           |
+| `in_fall_thr`        | Input voltage level considered as the switching point during a falling transition.                 | 50%           |
+| `out_rise_thr`       | Output voltage level used as a reference for measuring propagation delay during rise.              | 50%           |
+| `out_fall_thr`       | Output voltage level used as a reference for measuring propagation delay during fall.              | 50%           |
+
+
+### Propagation Delay
+
+Propagation delay is the time difference between when the input crosses its threshold and when the output crosses its corresponding threshold.
+
+```
+t_pd = time(out_*_t​hr) - time(in_*_thr)
+```
+
+### Transition Time
+
+Transition time (or slew rate) represents how fast the output signal transitions between logic levels.
+
+For rise:
+
+```
+t_rise = time(slew_high_rise_thr) - time(slew_low_rise_thr)
+```
+
+For fall:
+
+```
+t_fall = time(slew_high_fall_thr) - time(slew_low_fall_thr)
+```
+
 
 
 
