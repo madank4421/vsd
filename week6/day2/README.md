@@ -253,7 +253,9 @@ This opens the layout in Magic, allowing you to observe how standard cells are a
 
 ![image](images/magic_placement_zoomed.png)
 
-As we can see, the standard cells are placed in the core.
+As we can see, the standard cells are placed in the core. Selecting one of the standard cells and viewing the details in tkcon window using `what`
+
+![image](images/magic_placement_tkcon.png)
 
 
 
