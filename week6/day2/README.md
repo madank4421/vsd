@@ -1,4 +1,4 @@
-<img width="1919" height="920" alt="image" src="https://github.com/user-attachments/assets/f6e14ccb-30f9-4421-80a7-93cffbc6feee" /># Day 2 – WORK IN PROGRESS... 🏗️
+# Day 2 – WORK IN PROGRESS... 🏗️
 
 This section explains the key concepts and commands used during the **floorplanning** stage of the ASIC design flow using OpenLANE.
 
