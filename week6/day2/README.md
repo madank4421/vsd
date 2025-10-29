@@ -10,17 +10,17 @@ The floorplanning stage defines the physical dimensions of the chip’s **core**
 
   The ratio of the total area occupied by the synthesized netlist to the total available core area.
 
-  $$
-  \text{Utilization Factor} = \frac{\text{Area Occupied by Netlist}}{\text{Total Core Area}}
-  $$
+$$
+\text{Utilization Factor} = \frac{\text{Area Occupied by Netlist}}{\text{Total Core Area}}
+$$
 
 * **Aspect Ratio**
 
   Defines the proportional relationship between the height and width of the core.
 
-  $$
-  \text{Aspect Ratio} = \frac{\text{Height}}{\text{Width}}
-  $$
+$$
+\text{Aspect Ratio} = \frac{\text{Height}}{\text{Width}}
+$$
 
 These parameters directly affect the placement density and overall chip shape.
 
