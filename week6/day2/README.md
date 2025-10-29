@@ -197,11 +197,6 @@ Let us zoom and observe the standard cells:
 
 These standard cells will be placed properly during placement stage.
 
-
-Here’s your **Placement and Routing** section rewritten in the same Markdown structure and tone as your previous notes, with explanations and commands formatted clearly:
-
----
-
 ## Placement and Routing
 
 This stage focuses on mapping the synthesized netlist to the physical layout by assigning exact locations to each standard cell and optimizing their arrangement for wire length, congestion, and signal integrity.
