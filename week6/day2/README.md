@@ -1,4 +1,4 @@
-# Day 2 – WORK IN PROGRESS... 🏗️
+<img width="1919" height="920" alt="image" src="https://github.com/user-attachments/assets/f6e14ccb-30f9-4421-80a7-93cffbc6feee" /># Day 2 – WORK IN PROGRESS... 🏗️
 
 This section explains the key concepts and commands used during the **floorplanning** stage of the ASIC design flow using OpenLANE.
 
@@ -243,7 +243,7 @@ This command performs global and detailed placement, producing a placed DEF file
 To visualize the placement result using **Magic**, run:
 
 ```bash
-magic -T ~/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &
+magic -T ~/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
 ```
 
 This opens the layout in Magic, allowing you to observe how standard cells are arranged inside the core region after placement.
