@@ -152,7 +152,7 @@ after getting the `.mag` file Layout in Magic, Let us view the cmos inverter lay
 
 ```bash
 # Opens the CMOS inverter layout in Magic using the Sky130 technology file
-magic -T sky130A.tech sky130_inv.mag &
+magic -T ./lib/sky130A.tech sky130_inv.mag &
 ```
 
 ![image](images/magic_terminal.png)
@@ -303,7 +303,7 @@ load poly
 
 ![Alt text](images/load_poly.png)
 
-### poly.9 - DRC error not identified
+### poly.9 - DRC violation not identified
 
 in the poly.9 implementation, the distance between the leftmost ploy and the bottom most poly is calculated by selecting a box with the cursor, and typing `box` in tkcon.
 
