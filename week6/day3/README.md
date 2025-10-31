@@ -355,3 +355,55 @@ drc why
 Now, The DRC violation is recognized by the tool.
 
 ![Alt text](images/after_tech_load.png)
+
+
+
+### DRC Violation: Missing N-Well Tap (nwell.4)
+
+According to **nwell.4** of the [SkyWater PDK rules](https://skywater-pdk.readthedocs.io/en/main/rules/periphery.html#nwell), all N-Wells must contain metal-contacted taps. Let us verify if the DRC check can identify this violation.
+
+![image](images/sky130_website_2.png)
+
+A single N-Well is placed and the DRC is executed in **full** mode to include **CIF checks** as well. Surprisingly, no DRC violations are reported, which indicates a possible issue in the check mechanism.
+
+
+![image](images/before_drc_check.png)
+
+To fix this, we make modifications to our **sky130A.tech** library.
+
+![Alt text](images/change_3.png)
+
+```
+templayer nwell_tapped
+bloat-all nsc nwell
+```
+
+This command creates a temporary layer `nwell_tapped` that identifies all the **tapped N-Wells**.
+
+```
+templayer nwell_untapped nwell
+and-not nwell_tapped
+```
+
+This command creates a temporary layer `nwell_untapped` by removing the tapped N-Wells from the total set of N-Wells, leaving only **untapped N-Wells**.
+
+Now, looking at the **NWELL** section of the technology file:
+
+![Alt text](images/change_3.png)
+
+The code under the `variants (full)` section executes only when a **full DRC check** is performed, while the code under `variants *` runs during the **normal DRC check**.
+
+Next, let us re-run the DRC check.
+
+![Alt text](images/drc_after_change.png)
+
+![Alt text](images/drc_after_change_tkcon.png)
+
+This time, we get a **DRC violation** when performing the **full DRC check**, correctly identifying untapped N-Wells as violations.
+
+Finally, after **tapping the N-Well** using `nsubstratecontact`, we rerun the DRC check.
+
+![Alt text](images/no_drc_error.png)
+
+No **nwell.4 (missing tap)** violations are reported now, confirming that the fix works correctly.
+
