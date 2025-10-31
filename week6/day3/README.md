@@ -245,16 +245,25 @@ Perform transient analysis using the extracted SPICE file using ngspice. For tha
 
 ![Alt text](images/spice_file_updated.png)
 
+Running simulation in ngspice and plotting waveform
+
+```
+ngspice sky130_inv.spice
+
+plot y vs time a
+```
+
+![Alt text](images/ngspice.png)
 
 ### Rise Time:
 
 Rise time is considered as the time taken for the output to transition from 20% to 80% of the Vdd during rising edge.
 
-$$
-t_{rise} = t_{20%} - t_{80%}
-t_{rise} = 2.24 - 2.18
-t_{rise} = 0.06
-$$
+Tr = T(20%) - T(80%)
+
+Tr = 2.24 - 2.18
+
+Tr = 0.06
 
 Here,
 
@@ -264,15 +273,17 @@ Here,
 
 ![Alt text](images/rise_time.png)
 
+
+
 ### Fall Time:
 
 Fall time is considered as the time taken for the output to transition from 80% to 20% of the Vdd during falling edge.
 
-$$
-t_{fall} = t_{80%} - t_{20%}
-t_{fall} = 6.24 - 4.09
-t_{fall} = 2.15
-$$
+Tf = T(80%) - T(20%)
+
+Tf = 6.24 - 4.09
+
+Tf = 2.15
 
 ![Alt text](images/fall_time.png)
 
@@ -281,6 +292,8 @@ Here,
 * Vdd = 3.3V
 * 20% level = 0.66 V
 * 80% level = 2.64 V
+
+
 
 ### Rise Delay
 
@@ -291,33 +304,33 @@ For instance:
 * Vdd = 3.3V
 * 50% level = 1.65 V
 
-  ![Alt text](images/rise_delay.png)
+![Alt text](images/rise_delay.png)
 
-$$
-t_{rd} = t_{out,50%} - t_{in,50%}
-t_{rd} = 2.25 - 2.15
-t_{rd} = 0.06
-$$
+Trd = Tout(50%) - Tin(50%)
+
+Trd = 2.25 - 2.15
+
+Trd = 0.06
 
 
 
-### fall Delay
+### Fall Delay
 
 Calculated between the 50% points of input and output when the output is falling:
-
 
 For instance:
 
 * Vdd = 3.3V
 * 50% level = 1.65 V
 
-  ![Alt text](images/fall_delay.png)
+![Alt text](images/fall_delay.png)
 
-$$
-t_{fd} = t_{out,50%} - t_{in,50%}
-t_{fd} = 6.21-6.15
-t_{fd} = 0.06
-$$
+Tfd = Tout(50%) - Tin(50%)
+
+Tfd = 6.21 - 6.15
+
+Tfd = 0.06
+
 
 
 
