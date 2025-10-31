@@ -451,7 +451,7 @@ This command creates a temporary layer `nwell_untapped` by removing the tapped N
 
 Now, looking at the **NWELL** section of the technology file:
 
-![Alt text](images/change_3.png)
+![Alt text](images/change_4.png)
 
 The code under the `variants (full)` section executes only when a **full DRC check** is performed, while the code under `variants *` runs during the **normal DRC check**.
 
