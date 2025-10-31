@@ -1,4 +1,4 @@
-## Work in Progress... 🏗️
+<img width="614" height="621" alt="image" src="https://github.com/user-attachments/assets/647513cc-4abd-4673-9898-f65e95e98b39" />## Work in Progress... 🏗️
 
 ## IO Pin Configurations in OpenLANE
 
@@ -239,37 +239,85 @@ Here, the box measures 0.010 x 0.010 um . So set the scale in the SPICE file as:
 ![Alt text](images/nmos_model.png)
 
 
-=====================================================================================
-### Performing Transient Simulation
+## Performing Transient Simulation for extracted SPICE file
 
-Perform transient analysis to observe dynamic switching behavior of the CMOS inverter.
+Perform transient analysis using the extracted SPICE file using ngspice. For that we need to modify the SPICE file to perform trans analysis,
 
-#### Rise and Fall Times
+![Alt text](images/spice_file_updated.png)
 
-At 20% and 80% thresholds:
+
+### Rise Time:
+
+Rise time is considered as the time taken for the output to transition from 20% to 80% of the Vdd during rising edge.
 
 $$
-t_{rise/fall} = t_{80%} - t_{20%}
+t_{rise} = t_{20%} - t_{80%}
+t_{rise} = 2.24 - 2.18
+t_{rise} = 0.06
 $$
 
-Example values:
+Here,
 
+* Vdd = 3.3V
 * 20% level = 0.66 V
 * 80% level = 2.64 V
 
-#### Rise and Fall Delays
+![Alt text](images/rise_time.png)
 
-Calculated between the 50% points of input and output:
+### Fall Time:
+
+Fall time is considered as the time taken for the output to transition from 80% to 20% of the Vdd during falling edge.
 
 $$
-t_{pd} = t_{out,50%} - t_{in,50%}
+t_{fall} = t_{80%} - t_{20%}
+t_{fall} = 6.24 - 4.09
+t_{fall} = 2.15
 $$
+
+![Alt text](images/fall_time.png)
+
+Here,
+
+* Vdd = 3.3V
+* 20% level = 0.66 V
+* 80% level = 2.64 V
+
+### Rise Delay
+
+Calculated between the 50% points of input and output when the output is rising:
 
 For instance:
 
+* Vdd = 3.3V
 * 50% level = 1.65 V
 
-  =====================================================================================
+  ![Alt text](images/rise_delay.png)
+
+$$
+t_{rd} = t_{out,50%} - t_{in,50%}
+t_{rd} = 2.25 - 2.15
+t_{rd} = 0.06
+$$
+
+
+
+### fall Delay
+
+Calculated between the 50% points of input and output when the output is falling:
+
+
+For instance:
+
+* Vdd = 3.3V
+* 50% level = 1.65 V
+
+  ![Alt text](images/fall_delay.png)
+
+$$
+t_{fd} = t_{out,50%} - t_{in,50%}
+t_{fd} = 6.21-6.15
+t_{fd} = 0.06
+$$
 
 
 
