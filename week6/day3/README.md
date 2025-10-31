@@ -368,7 +368,7 @@ According to **nwell.4** of the [SkyWater PDK rules](https://skywater-pdk.readth
 A single N-Well is placed and the DRC is executed in **full** mode to include **CIF checks** as well. Surprisingly, no DRC violations are reported, which indicates a possible issue in the check mechanism.
 
 
-![image](images/before_drc_check.png)
+![image](images/before_drc_change.png)
 
 To fix this, we make modifications to our **sky130A.tech** library.
 
