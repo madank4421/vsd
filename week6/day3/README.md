@@ -1,4 +1,4 @@
-<img width="614" height="621" alt="image" src="https://github.com/user-attachments/assets/647513cc-4abd-4673-9898-f65e95e98b39" />## Work in Progress... 🏗️
+## Work in Progress... 🏗️
 
 ## IO Pin Configurations in OpenLANE
 
