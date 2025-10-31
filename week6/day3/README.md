@@ -41,61 +41,315 @@ You can zoom and observe the IO cells by clicking `z`
 
 ![image](images/io_zoomed_1.png)
 
-## SPICE Simulation for CMOS Inverter
-
-### Static Analysis
-
-The simulation is performed for two transistor sizing conditions:
+As we can see, this configuration (FP_IO_MODE = 2) of IO cell placement is different from that of the first configuration (FP_IO_MODE = 1).
 
 
-$$
-i) W_p = W_n = 0.375,\mu m, \quad L_p = L_n = 0.25,\mu m
-$$
 
-$$
-ii) W_p = W_n = 0.9375,\mu m, \quad L_p = L_n = 0.25,\mu m
-$$
+## 16-Mask CMOS Process
 
-When the PMOS width increases, the inverter’s transfer curve shifts toward the right.
-This means the switching threshold voltage  $$V_m$$ increases.
 
-To calculate the switching threshold, draw the line ( x = y ) on the VTC curve.
-At the switching threshold $$V_m$$ , the condition is:
+## 1. Substrate Preparation
 
-$$
-V_{in} = V_{out}
-$$
+* Use p-type silicon substrate
+* High resistivity: approximately 5–50 Ω·cm
+* Doping concentration: ( 10^{15},cm^{-3} ) (should be less than well doping)
+* Crystal orientation: (100)
 
-For the first inverter: 
 
-$$
-V_m \approx 0.98,V
-$$
+## 2. Creating Active Region for Transistors
 
-For the second inverter: 
+* Grow silicon dioxide (~40 nm)
+* Deposit silicon nitride (~80 nm)
+* Apply photoresist layer (~1 µm)
+* Perform masking and exposure using UV light (photolithography)
+* Etch silicon nitride to expose selected areas
+* Oxidize exposed silicon to form field oxide for isolation
+* This process is known as **LOCOS (Local Oxidation of Silicon)**
+* Remove silicon nitride to reveal the active regions
 
-$$ 
-V_m \approx 1.2,V 
-$$
 
-### Dynamic Simulation
+## 3. N-Well and P-Well Formation
 
-To perform a transient (dynamic) simulation, the following input pulse is used:
+* Apply photoresist
+* Mask and expose the p-well areas
+* Remove photoresist
+* Perform ion implantation for p-well using **boron (~200 keV)**
+* Repeat the process for n-well using **phosphorus**
+* Perform high-temperature **drive-in diffusion** to achieve proper well depth and concentration
+
+
+## 4. Gate Formation
+
+* Apply photoresist and expose the p-well region using a gate mask
+* Dope the p-well with **boron (~60 keV)** for shallow doping
+* Repeat for n-well using **arsenic**
+* Strip off the oxide layer using **HF etching**
+* Deposit **polysilicon (~0.4 µm)** on the surface
+* Dope polysilicon using **phosphorus or arsenic**
+* Perform masking, exposure, and etching to define the gate structure
+
+
+## 5. Lightly Doped Drain (LDD) Formation
+
+* Consider **hot-electron** and **short-channel effects** before doping
+* Perform photolithography to expose the p-well region
+* Dope with **phosphorus** to create n- implants
+* Repeat for n-well and dope with **boron** to form p- implants
+* Deposit ~0.1 µm of silicon nitride or silicon dioxide
+* Perform **plasma anisotropic etching** to create **sidewall spacers**
+
+
+## 6. Source and Drain Formation
+
+* Add a **screen oxide** to prevent channeling during implantation
+* Perform photolithography to expose the p-well
+* Dope p-well using **arsenic** to form n+ regions
+* Expose the n-well and dope using **boron (~50 keV)** to form p+ regions
+* Perform **annealing** at high temperature to activate dopants and repair lattice defects
+
+## 7. Contact and Local Interconnect Formation
+
+* Etch the thin oxide layer using **HF solution**
+* Deposit **titanium (Ti)** using **sputtering** (Ar+ ions dislodge Ti atoms which settle on the wafer)
+* Heat wafer to **650–700°C** to form:
+
+  * **TiSi₂** (low-resistance contact)
+  * **TiN** (local interconnect)
+* Perform photolithography to expose contact regions
+* Etch TiN using **RCA Cleaning solution** (DI water: 5 parts, NH₄OH: 1 part, H₂O₂: 1 part)
+* Remove photoresist after cleaning
+
+
+## 8. Higher Level Metal Formation
+
+* Deposit **1 µm SiO₂** doped with phosphorus or boron
+* Perform **CMP (Chemical Mechanical Polishing)** for planarization
+* Perform photolithography to open vias (contact holes)
+* Deposit ~10 nm **TiN** (adhesion + diffusion barrier)
+* Blanket deposit **tungsten (W)** and perform CMP again
+* Deposit **aluminium** for metal interconnects
+* Perform photolithography and etch aluminium pattern
+* Deposit another SiO₂ layer and perform CMP again
+* Repeat patterning, deposit **tin (Sn)** for adhesion, followed by **tungsten (W)** for next interconnect layer
+* Apply **Si₃N₄ dielectric** to protect the chip surface
+* Use the final mask to drill vias for final contact connections
+
+![image](images/cmos_fab.png)
+
+courtesy: https://vsdiat.vlsisystemdesign.com
+
+## Lab Work: Layout Extraction and Simulation
+
+### Get the `.mag` file for CMOS inverter
+
+```bash
+cd ~/Desktop/work/tools/openlane_working_dir/openlane/
+
+git clone https://github.com/nickson-jose/vsdstdcelldesign.git
+```
+
+after getting the `.mag` file Layout in Magic, Let us view the cmos inverter layout using magic
+
+```bash
+# Opens the CMOS inverter layout in Magic using the Sky130 technology file
+magic -T sky130A.tech sky130_inv.mag &
+```
+
+![image](images/magic_terminal.png)
+
+![image](images/magic_window_3.png)
+
+**To inspect components:**
+
+* Place the cursor over PMOS or NMOS
+* Press `s` once to select a shape, or three times to select the entire connected components
+
+![image](images/pmos_connection.png)
+
+![image](images/nmos_connection.png)
+
+* Open the **tkcon** window and type `what` to know the components:
+
+```bash
+what
+```
+![image](images/pmos_and_nmos_tkcon.png)
+
+Now, let us extract the layout information into a `.spice ` file.
+
+### Extracting SPICE File
+
+```bash
+# Shows current working directory
+pwd
+
+#Extracts all connectivity and device information
+extract all
+
+# Sets capacitance and resistance extraction thresholds to 0 for complete extraction
+ext2spice cthresh 0 rthresh 0
+
+# Generates the SPICE netlist from the layout
+ext2spice
+```
+
+![Alt text](images/ext2spice.png)
+
+now, `.spice` file is extracted from the CMOS layout 
+
+![Alt text](images/spice_file_terminal.png)
+
+sky130_inv.spice file:
+
+![Alt text](images/spice_file.png)
+
+
+### Simulation using ngspice
+
+First we do certain modifications in the `.spice` file before performing simulation using ngspice.
+we need to find the correct 'scale' value. we can find it by finding the scale value of the layout in magic.
+
+Enable grid in Magic:
 
 ```
-vin in 0 0 pulse 0 2.5 0 10p 10p 1n 2n
+Window -> Grid On
 ```
 
-This line defines:
+Select a basic level box in the layout. Now in the tkcon window, type:
 
-* Input from 0 V to 2.5 V
-* No initial delay (0)
-* Rise time = 10 ps
-* Fall time = 10 ps
-* ON time (duty cycle) = 1 ns
-* Period = 2 ns
+```bash
+# Displays the dimensions of the selected area
+box
+```
+
+![Alt text](images/grid.png)
+
+Here, the box measures 0.010 x 0.010 um . So set the scale in the SPICE file as:
+
+```
+.scale 0.01u
+```
 
 
-### Delay Calculations
+* In `pshort.lib`, note that the PMOS model name is `pshort_model.0`
+* Update the extracted SPICE file accordingly for PMOS and NMOS models
+* The correct model names must match those in the library before simulation
 
-The propagation delays are calculated as the time difference between the 50% points of input and output waveforms.
+![Alt text](images/nmos_model.png)
+
+
+=====================================================================================
+### Performing Transient Simulation
+
+Perform transient analysis to observe dynamic switching behavior of the CMOS inverter.
+
+#### Rise and Fall Times
+
+At 20% and 80% thresholds:
+
+$$
+t_{rise/fall} = t_{80%} - t_{20%}
+$$
+
+Example values:
+
+* 20% level = 0.66 V
+* 80% level = 2.64 V
+
+#### Rise and Fall Delays
+
+Calculated between the 50% points of input and output:
+
+$$
+t_{pd} = t_{out,50%} - t_{in,50%}
+$$
+
+For instance:
+
+* 50% level = 1.65 V
+
+  =====================================================================================
+
+
+
+## Lab introduction to Magic tool options and DRC rules
+
+Download the skywater `sky130A.tech` file from http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz
+
+```bash
+wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz
+
+tar xfz drc_tests.tgz
+
+cd drc_tests
+
+ls -al
+
+gvim .magicrc
+```
+
+![Alt text](images/dot_magicrc.png)
+
+Open Magic
+```
+magic -d XR &
+```
+
+in the tkcon window , load the 'poly' layout
+
+```
+tech load poly
+```
+
+![Alt text](images/load_poly.png)
+
+### poly.9 - DRC error not identified
+
+in the poly.9 implementation, the distance between the leftmost ploy and the bottom most poly is calculated by selecting a box with the cursor, and typing `box` in tkcon.
+
+![Alt text](images/box_poly.png)
+
+The distance between these two poly is found to be 4.48 - 4.27 = 0.21 um
+
+Let us check if the DRC rules allow this distance. let us go to: https://skywater-pdk.readthedocs.io/en/main/rules/periphery.html#poly
+
+![Alt text](images/sky130_website.png)
+
+As we can see, the minimum distance between poly and other components should be 0.48 um. So let us do drc check to find whether this error is recognized or not.
+
+```
+drc check
+drc why
+```
+
+It does not recognize any violations with poly. So the tech file is wrong and should be changed.
+
+### Steps to alter the sky130A.tech file
+
+The aliases for poly is found here:
+
+`sky130A.tech` :
+
+![Alt text](images/aliases.png)
+
+Change  the sky130A.tech file for poly.9
+
+![Alt text](images/change1.png)
+
+![Alt text](images/change2.png)
+
+Now load the tech file in magic tkcon:
+
+```
+tech load sky130A
+```
+
+![Alt text](images/before_tech_load.png)
+
+Now let us check for drc errors:
+
+```
+drc check
+drc why
+```
+Now, The DRC violation is recognized by the tool.
