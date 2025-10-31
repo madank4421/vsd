@@ -298,7 +298,7 @@ magic -d XR &
 in the tkcon window , load the 'poly' layout
 
 ```
-tech load poly
+load poly
 ```
 
 ![Alt text](images/load_poly.png)
@@ -353,3 +353,5 @@ drc check
 drc why
 ```
 Now, The DRC violation is recognized by the tool.
+
+![Alt text](images/after_tech_load.png)
