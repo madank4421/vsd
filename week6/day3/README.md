@@ -383,6 +383,8 @@ As we can see, the minimum distance between poly and other components should be 
 drc check
 drc why
 ```
+![image](images/drc_check_before.png)
+
 
 It does not recognize any violations with poly. So the tech file is wrong and should be changed.
 
