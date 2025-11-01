@@ -49,7 +49,7 @@ As we can see, this configuration (FP_IO_MODE = 2) of IO cell placement is diffe
 ## 16-Mask CMOS Process
 
 
-## 1. Substrate Preparation
+## 1. Selecting a substrate
 
 * Use p-type silicon substrate
 * High resistivity: approximately 5–50 Ω·cm
