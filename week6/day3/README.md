@@ -1,4 +1,4 @@
-# WEEK 6 Day 3 - Design library cell using Magic Layout and ngspice characterization
+# WEEK 6 - Day 3 - Design library cell using Magic Layout and ngspice characterization
 
 ## IO Pin Configurations in OpenLANE
 
