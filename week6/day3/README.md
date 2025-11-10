@@ -1,4 +1,4 @@
-## Work in Progress... 🏗️
+# Day 3 - Design library cell using Magic Layout and ngspice characterization
 
 ## IO Pin Configurations in OpenLANE
 
