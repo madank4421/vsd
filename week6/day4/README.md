@@ -31,6 +31,10 @@ From this **tracks.info** file, we can determine:
 
 So let us set  the grid accordingly in our layout
 
+```
+grid 0.46um 0.34um 0.23um 0.17um
+```
+
 ![image](images/grid_command.png)
 
 
@@ -46,6 +50,7 @@ Hence, it satisfies the first condition.
 ![image](images/c2.png)
 
 The width of the standard cell is:
+
 $$
 1.38,\mu m - 0.00,\mu m = 1.38,\mu m = 3 \times 0.46,\mu m
 $$
@@ -57,6 +62,7 @@ Hence, it satisfies the second condition.
 ![image](images/c3.png)
 
 The height of the standard cell is:
+
 $$
 2.72,\mu m - 0.00,\mu m = 2.72,\mu m = 8 \times 0.34,\mu m
 $$
