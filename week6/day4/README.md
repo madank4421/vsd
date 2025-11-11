@@ -1,5 +1,5 @@
 
-# Day 4 - Pre-layout timing analysis and importance of good clock tree
+# WEEK 6 - Day 4 - Pre-layout timing analysis and importance of good clock tree
 
 Let us check whether our inverter layout satisfies some conditions for good layout.
 
