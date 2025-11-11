@@ -215,9 +215,11 @@ run_synthesis
 As we can see, The total negative slack is reduced and became 0. However the area in increased when compared to previously synthesized layout. Thus we trade area to improve the timing.
 
 Area before = 1,47,712 units
+
 Area after = 1,81,730 units
 
 TNS before = -711.59
+
 TNS after = 0
 
 Now run the floorplan:
