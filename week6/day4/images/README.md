@@ -7,5 +7,5 @@ link_design picorv32a
 read_sdc ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/my_base.sdc
 
 report_checks -path_delay min_max -fields {slew trans net cap input_pin fanout}
-report tns
-report wns
+report_tns
+report_wns
