@@ -110,7 +110,7 @@ LEF file is created:
 Now copy the `.lef` files to the `picorv32a/src/` directory.
 
 
-```tcl
+```bash
 cp sky130_vsdinv.lef ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
 
 cp libs/sky130_fd_sc_hd__* ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
@@ -151,9 +151,11 @@ Then run:
 
 ```tcl
 package require openlane 0.9
+
 prep -design picorv32a -tag 30-10_11-30 -overwrite
 
 set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+
 add_lefs -src $lefs
 
 run_synthesis
@@ -182,6 +184,7 @@ The details of these parameters can be seen in
 prep -design picorv32a -tag new -overwrite
 
 set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+
 add_lefs -src $lefs
 
 echo $::env(SYNTH_STRATEGY)
@@ -208,6 +211,14 @@ run_synthesis
 ![Alt text](images/area2.png)
 
 ![Alt text](images/tns2.png)
+
+As we can see, The total negative slack is reduced and became 0. However the area in increased when compared to previously synthesized layout. Thus we trade area to improve the timing.
+
+Area before = 1,47,712 units
+Area after = 1,81,730 units
+
+TNS before = -711.59
+TNS after = 0
 
 Now run the floorplan:
 
