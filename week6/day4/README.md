@@ -103,3 +103,163 @@ lef write
 LEF file is created:
 
 ![image](images/lef_created.png)
+
+
+## Using Custom Inverter in Picorv32a Synthesis and Layout
+
+Now copy the `.lef` files to the `picorv32a/src/` directory.
+
+
+```tcl
+cp sky130_vsdinv.lef ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+
+cp libs/sky130_fd_sc_hd__* ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+```
+
+Now modify the `config.tcl` file to include all the necessary `.lib` files.  
+Add this line:
+
+```tcl
+set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__fast.lib"
+set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib"
+set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+set ::env(EXTRA_LEFS) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]
+````
+
+![Alt text](images/config.png)
+
+Now invoke OpenLane:
+
+```tcl
+cd ~/Desktop/work/tools/openlane_working_dir/openlane
+
+alias docker='docker run -it -v $(pwd):/openLANE_flow -v $PDK_ROOT:$PDK_ROOT -e PDK_ROOT=$PDK_ROOT -u $(id -u $USER):$(id -g $USER) efabless/openlane:v0.21'
+
+docker
+```
+
+Now in the bash shell, invoke OpenLane:
+
+```tcl
+./flow.tcl -interactive
+```
+
+![Alt text](images/openlane1.png)
+
+Then run:
+
+```tcl
+package require openlane 0.9
+prep -design picorv32a -tag 30-10_11-30 -overwrite
+
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+run_synthesis
+```
+
+![Alt text](images/set_lef.png)
+
+Now note that our custom inverter is used in the synthesis.
+
+![Alt text](images/inv1.png)
+
+The chip area and the TNS can be seen:
+
+![Alt text](images/area1.png)
+
+![Alt text](images/tns1.png)
+
+We got a negative slack which is bad.
+Now let us improve timing by compromising the area. This can be done by changing a few parameters.
+The details of these parameters can be seen in
+`~/Desktop/work/tools/openlane_working_dir/openlane/configuration/` under `README.md`.
+
+![Alt text](images/readme.png)
+
+```bash
+prep -design picorv32a -tag new -overwrite
+
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+echo $::env(SYNTH_STRATEGY)
+
+set ::env(SYNTH_STRATEGY) "DELAY 3"
+
+echo $::env(SYNTH_BUFFERING)
+
+echo $::env(SYNTH_SIZING)
+
+set ::env(SYNTH_SIZING) 1
+
+echo $::env(SYNTH_DRIVING_CELL)
+```
+
+![Alt text](images/set_env.png)
+
+Now run synthesis:
+
+```tcl
+run_synthesis
+```
+
+![Alt text](images/area2.png)
+
+![Alt text](images/tns2.png)
+
+Now run the floorplan:
+
+```tcl
+run_floorplan
+```
+
+![Alt text](images/error.png)
+
+We get an error message when we run the `run_floorplan` command.
+Let us use another command instead.
+The details of other floorplan commands can be found in
+`~/Desktop/work/tools/openlane_working_dir/openlane/docs/source/` directory under `OpenLANE_commands.md`.
+
+![Alt text](images/readme2.png)
+
+Let us run these alternate commands:
+
+```tcl
+init_floorplan
+place_io
+tap_decap_or
+```
+
+![Alt text](images/init1.png)
+
+![Alt text](images/init2.png)
+
+Now let us run placement:
+
+```tcl
+run_placement
+```
+
+![Alt text](images/placement.png)
+
+Now let us view the `picorv32a` layout using Magic:
+
+```bash
+cd ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/new/results/placement/
+
+magic -T ~/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech \
+lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+```
+
+![Alt text](images/magic3.png)
+
+Let us find our custom inverter in this layout:
+
+![Alt text](images/what.png)
+
+We can expand the view of this inverter using the `expand` command in the tkcon window:
+
+![Alt text](images/expand.png)
+
