@@ -25,4 +25,5 @@
 | Week 4 | [CMOS Circuit Design (sky130-style)](week4/README.md) |
 | [Week 5](week5/) |
 | Week 5 | [OpenROAD Flow Setup and Floorplan + Placement](week5/README.md) |
-
+| [Week 6](week6/) |
+| Week 6 | [Advanced Physical Design using OpenLane for picorv32a design](week6/README.md) |
