@@ -86,7 +86,6 @@ exit
 Now open the saved layout:
 
 ```tcl
-# Command to open custom inverter layout in magic
 magic -T ./lib/sky130A.tech sky130_vsdinv.mag &
 ```
 
