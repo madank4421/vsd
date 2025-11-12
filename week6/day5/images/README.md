@@ -1,3 +1,4 @@
+```
 % report_checks -path_delay min_max -fields {slew trans net cap input_pins} -format full_clock_expanded -digits 4
 Startpoint: _31002_ (rising edge-triggered flip-flop clocked by clk)
 Endpoint: _30967_ (rising edge-triggered flip-flop clocked by clk)
@@ -155,3 +156,4 @@ Fanout       Cap      Slew     Delay      Time   Description
 
 
 
+```
