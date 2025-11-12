@@ -1,107 +1,128 @@
 # WEEK 6 - Day 5: Final Steps in RTL-to-GDS using TritonRoute and OpenSTA
 
-## RISC-V Reference SoC Tapeout Program
+## Detailed Routing Using TritonRoute
 
-In this concluding part of the **Physical Design Flow**, we focus on the stages that follow **Clock Tree Synthesis (CTS)** — namely, the **Power Distribution Network (PDN)** creation, **Routing** using **TritonRoute**, and final verification steps including **Design Rule Check (DRC)** and **post-route timing analysis** using **SPEF extraction** and **OpenSTA**.
+In this section, we will perform **detailed routing** using **TritonRoute** and analyze the results through Magic and OpenROAD.
 
----
-
-## 1. Power Distribution Network (PDN) Generation
-
-In the conventional RTL-to-GDSII flow, PDN generation is typically performed before cell placement.
-However, **OpenLANE** performs this process **after CTS** to ensure that the power rails are properly aligned and that the inserted clock buffers are well connected to the power grid.
-
-The PDN creation step establishes **VDD and VSS rails and straps**, distributing power uniformly across the design to maintain voltage stability.
-
-### Command to Generate PDN
-
-```bash
-gen_pdn
 ```
+# Display the current DEF file location being used by OpenLANE
+echo $::env(CURRENT_DEF)
 
-This command invokes **OpenROAD’s PDN generator**, which automatically lays out power grids across multiple metal layers using predefined configuration parameters.
+# Display the routing strategy value defined in configuration
+echo $::env(ROUTING_STRATEGY)
 
-![Alt text](images/01.png)
-
----
-
-## 2. Routing with TritonRoute
-
-**TritonRoute** is the detailed routing tool integrated within OpenLANE.
-It translates the global routing guides into precise metal connections on the chip, ensuring that the layout is **DRC-clean** and all nets are fully connected.
-
-### Routing Flow Overview
-
-1. **Global Routing** – Establishes approximate routing paths between components.
-2. **Detailed Routing** – Refines these paths using algorithms that determine exact metal tracks and via placements.
-
-### Command to Start Routing
-
-```bash
+# Execute the detailed routing process using TritonRoute engine
 run_routing
 ```
 
-This command executes **TritonRoute**, which performs:
+![Alt text](images/zeroth.png)
 
-* Pin access and track assignment
-* Detailed routing with iterative repair
-* DRC error detection and correction
+![Alt text](images/first.png)
 
-The final routed layout satisfies all physical design rules defined by the technology PDK.
+![Alt text](images/second.png)
 
-| Before Routing             | After Routing              |
-| -------------------------- | -------------------------- |
-| ![Alt text](images/02.png) | ![Alt text](images/03.png) |
+![Alt text](images/last.png)
 
----
+After each routing iteration, the total wire length and number of violations gradually decrease as the design becomes cleaner and more optimized.
 
-## 3. SPEF Generation for Parasitic Extraction
+![Alt text](images/routing.png)
 
-The **Standard Parasitic Exchange Format (SPEF)** represents the parasitic resistance and capacitance of interconnects in the layout.
-These parasitics directly influence signal delay and are essential for accurate **post-route Static Timing Analysis (STA)**.
+![Alt text](images/routing2.png)
 
-OpenLANE provides a **Python-based SPEF extractor** that computes parasitic information from the routed design.
+## Visualizing the Routed Layout in Magic
 
-### Command for SPEF Extraction
+Once routing is completed, you can visualize the final routed layout in **Magic VLSI**.
 
-```bash
-cd <path-to-SPEF_EXTRACTOR-tool-directory>
-python3 main.py <path-to-LEF-file> <path-to-DEF-file-after-routing>
+```
+# Navigate to the directory containing the routed DEF file
+cd ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/11-11_16-13/results/routing
+
+# Launch Magic and load the routed DEF and technology LEF
+magic -T ~/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.def &
 ```
 
-An example portion of the `.spef` file is shown below:
+![Alt text](images/magic.png)
 
-![Alt text](images/04.png)
+The above layout represents the design after performing detailed routing.
+You can use zoom and pan tools within Magic to inspect the routed interconnections closely.
 
-This file contains **RC parasitic data** for all interconnects, which will later be used by **OpenSTA** for timing validation.
+![Alt text](images/magic1.png)
 
----
+![Alt text](images/magic2.png)
 
-## 4. Design Rule Check (DRC)
+![Alt text](images/magic3.png)
 
-Once routing is completed, the layout undergoes a **Design Rule Check** to ensure compliance with all manufacturing rules defined in the technology process (e.g., Sky130).
-The built-in DRC engine within **TritonRoute** verifies:
+Next, let’s take a look at the **FastRoute guide** files available in the following directory:
 
-* Spacing and enclosure rules
-* Minimum metal width
-* Via overlaps and shorts
-* Connectivity and open checks
+`openlane/designs/picorv32a/runs/11-11_16-13/tmp/routing/`
 
-Only **DRC-clean** designs proceed to GDSII generation, ensuring that the layout can be fabricated without physical violations.
+![Alt text](images/fastroute_guide.png)
 
----
+## Post-Routing Parasitic Extraction (SPEF Extraction)
 
+After routing, we extract the **Standard Parasitic Exchange Format (SPEF)** file, which contains detailed parasitic capacitance and resistance values for accurate post-route timing analysis.
 
-## 5. Post-Route Timing Validation with OpenSTA
+```
+# Navigate to the directory containing the SPEF extractor
+cd ~/Desktop/work/tools/openlane_working_dir/openlane/scripts/spef_extractor
 
-After routing and parasitic extraction, **OpenSTA** is used again for **post-route STA** to analyze the design with real interconnect delays included.
-
-### Command to Perform Timing Analysis
-
-```bash
-sta post_route_sta.tcl
+# Execute the Python SPEF extraction script using merged LEF and routed DEF
+python3 main.py -l ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/11-11_16-13/tmp/merged.lef -d ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/11-11_16-13/results/routing/picorv32a.def
 ```
 
-This final timing verification step confirms that the design meets setup and hold constraints, making it ready for tapeout.
-The next phase will focus on **final verification, GDS export, and tapeout preparation**.
+![Alt text](images/spef_extraction.png)
+
+You can now view the generated `.spef` file inside:
+
+`~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/11-11_16-13/results/routing/`
+
+![Alt text](images/spef.png)
+
+## Post-Routing OpenSTA Timing Analysis Using SPEF
+
+Finally, we’ll perform **post-routing timing analysis** in **OpenROAD (OpenSTA)**, which uses the extracted parasitics to generate accurate setup and hold timing reports.
+
+```
+# Launch OpenROAD shell for timing analysis
+openroad
+
+# Load the technology and cell LEFs (used for layout geometry and standard cells)
+read_lef /openLANE_flow/designs/picorv32a/runs/11-11_16-13/tmp/merged.lef
+
+# Load the final routed DEF (includes interconnections and routing information)
+read_def /openLANE_flow/designs/picorv32a/runs/11-11_16-13/results/routing/picorv32a.def
+
+# Save OpenROAD database for reference or reuse
+write_db pico_route.db
+
+# Optionally reload the saved database
+read_db pico_route.db
+
+# Load the Verilog netlist generated after synthesis
+read_verilog /openLANE_flow/designs/picorv32a/runs/11-11_16-13/results/synthesis/picorv32a.synthesis_preroute.v
+
+# Load the complete Liberty timing models
+read_liberty $::env(LIB_SYNTH_COMPLETE)
+
+# Link the design’s top-level module with its corresponding libraries
+link_design picorv32a
+
+# Load the custom SDC file containing clock and timing constraints
+read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
+
+# Mark all defined clocks as propagated to include clock tree delays
+set_propagated_clock [all_clocks]
+
+# Load the extracted parasitic data for accurate delay calculations
+read_spef /openLANE_flow/designs/picorv32a/runs/11-11_16-13/results/routing/picorv32a.spef
+```
+
+![Alt text](images/openroad.png)
+
+```
+# Generate a timing report showing both setup and hold paths
+report_checks -path_delay min_max -fields {slew trans net cap input_pins} -format full_clock_expanded -digits 4
+```
+
+![Alt text](images/sta.png)
 
