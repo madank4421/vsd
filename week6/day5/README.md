@@ -282,6 +282,6 @@ Fanout       Cap      Slew     Delay      Time   Description
 -------------------------------------------------------------------------------------
                                        13.7540   slack (MET)
 
-
 ```
 
+Thus, Timing analysis is done after performing Routing (Post-routing).
