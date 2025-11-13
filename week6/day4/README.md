@@ -278,8 +278,7 @@ We can expand the view of this inverter using the `expand` command in the tkcon 
 
 
 
-````markdown
-# Timing Analysis with Ideal Clocks using OpenSTA
+## Timing Analysis with Ideal Clocks using OpenSTA
 
 In this section, we will perform post-synthesis timing analysis using the OpenSTA tool, without any prior parameter changes. The goal is to understand timing performance and how various synthesis parameters or cell replacements can influence slack values.
 
@@ -298,6 +297,7 @@ Once inside Docker, invoke OpenLane in interactive mode and set up the design en
 
 ```bash
 ./flow.tcl -interactive
+
 package require openlane 0.9
 
 prep -design picorv32a
@@ -306,6 +306,7 @@ set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
 add_lefs -src $lefs
 
 set ::env(SYNTH_SIZING) 1
+
 run_synthesis
 ```
 
