@@ -180,6 +180,8 @@ The details of these parameters can be seen in
 
 ![Alt text](images/readme.png)
 
+Change few parameters and run synthesis
+
 ```bash
 prep -design picorv32a -tag new -overwrite
 
