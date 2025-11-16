@@ -259,7 +259,7 @@ Hold timing details:
 
 Slack histograms:
 
-![Alt text](images/setup_histogram.png)
+![Alt text](images/setup_chart.png)
 
 ![Alt text](images/hold_histogram.png)
 
