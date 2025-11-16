@@ -28,6 +28,8 @@
 | [Week 6](week6/) |
 | Day 1 | [Inception of open-source EDA, OpenLANE and Sky130 PDK](week6/day1/) |
 | Day 2 | [Good floorplan vs bad floorplan and introduction to library cells](week6/day2/) |
-| Day 3 | [Design library cell using Magic Layout and ngspice characterization](week6/day3/)
-| Day 4 | [Pre-layout timing analysis and importance of good clock tree](week6/day4/)
-| Day 5 | [Final steps for RTL2GDS using tritonRoute and openSTA](week6/day5/)
+| Day 3 | [Design library cell using Magic Layout and ngspice characterization](week6/day3/) |
+| Day 4 | [Pre-layout timing analysis and importance of good clock tree](week6/day4/) |
+| Day 5 | [Final steps for RTL2GDS using tritonRoute and openSTA](week6/day5/) |
+| [Week 7](week7/) |
+| Week 7 | [BabySoC Physical Design & Post-Route SPEF Generation](week7/README.md) |
