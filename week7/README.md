@@ -41,7 +41,6 @@ make gui_final
 
 ![Alt text](images/gui.png)
 
----
 
 ## Preparing the VSDBabySoC Environment
 
@@ -80,7 +79,6 @@ Copy these directories/files from the VSDBABYSOC source to current directory:
 * pin_order.cfg
 * vsdbabysoc_synthesis.sdc
 
----
 
 ## Creating the config.mk File
 
@@ -143,9 +141,10 @@ export SKIP_GATE_CLONING = 1
 # magic options
 export MAGIC_ZEROIZE_ORIGIN = 0
 export MAGIC_EXT_USE_GDS    = 1
+
+# export CORE_UTILIZATION=0.1  # Reduce this value to allow more whitespace for routing.
 ```
 
----
 
 Move into OpenROAD-flow-scripts/flow:
 
@@ -153,7 +152,6 @@ Move into OpenROAD-flow-scripts/flow:
 cd OpenROAD-flow-scripts/flow
 ```
 
----
 
 ## Running RTL-to-GDSII Flow
 
@@ -177,7 +175,6 @@ Check for synthesis issues:
 
 ![Alt text](images/synth_check.png)
 
----
 
 ## Floorplan
 
@@ -227,7 +224,6 @@ Pin density can also be examined:
 
 ![Alt text](images/pin_density_zoomed.png)
 
----
 
 ## Clock Tree Synthesis (CTS)
 
@@ -275,7 +271,6 @@ OpenROAD-flow-scripts/flow/reports/sky130hd/vsdbabysoc/base/4_cts_final.rpt
 
 ![Alt text](images/cts_report.png)
 
----
 
 ## Routing
 
@@ -288,4 +283,3 @@ make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk route
 Routing completes the final step of the flow, generating DEF, GDS, SPEF, and timing reports.
 
 
-This completes the entire OpenROAD-flow-scripts pipeline setup and execution for **vsdbabysoc**.
