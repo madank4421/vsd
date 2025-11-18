@@ -280,4 +280,147 @@ make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk route
 
 ![Alt text](images/routing.png)
 
-Routing completes the final step of the flow, generating DEF, GDS, SPEF, and timing reports.
+To visualize the routed layout using the GUI:
+
+```
+make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk gui_route
+```
+
+![Alt text](images/routing_window.png)
+
+Inside the OpenROAD GUI, the routed nets can be inspected. Below is the view showing details for the `VCO_IN` net:
+
+![Alt text](images/VCO_IN.png)
+
+Routing congestion heatmaps can also be enabled to analyze congestion visually.
+
+![Alt text](images/routing_heat.png)
+
+The routed clock net (`clknet`) is also visible in the routed design.
+
+![Alt text](images/clknet.png)
+
+A closer look at a selected region is shown:
+
+![Alt text](images/closeup.png)
+
+![Alt text](images/net5.png)
+
+Timing results after routing can be observed using the following command inside the scripting terminal of the GUI:
+
+```
+report_checks
+```
+
+![Alt text](images/timing.png)
+
+Generated logs for the routing stage are available under:
+
+```
+OpenROAD-flow-scripts/flow/logs/sky130hd/vsdbabysoc/base/
+```
+
+![Alt text](images/log_files.png)
+
+# Creating the DEF File
+
+A DEF (.def) file can be generated from the OpenROAD database (.odb). This helps in exporting the complete physical layout description.
+
+```
+cd ~/OpenROAD-flow-scripts
+source env.sh
+
+cd flow
+openroad
+
+read_db /home/madank/OpenROAD-flow-scripts/flow/results/sky130hd/vsdbabysoc/base/5_route.odb
+
+write_def /home/madank/OpenROAD-flow-scripts/flow/results/sky130hd/vsdbabysoc/base/5_route.def
+```
+
+![Alt text](images/def_creation.png)
+
+The created DEF file is shown here:
+
+![Alt text](images/def_file.png)
+
+# Generating Post-Route SPEF File
+
+A SPEF file captures the extracted parasitics (resistance, capacitance) of routed nets. It is essential for accurate post-route timing analysis.
+
+Invoke OpenROAD:
+
+```
+cd ~/OpenROAD-flow-scripts
+source env.sh
+cd flow/
+openroad
+```
+
+Load necessary LEF files:
+
+```
+read_lef /home/madank/OpenROAD-flow-scripts/flow/designs/sky130hd/vsdbabysoc/lef/sky130hd.lef
+read_lef /home/madank/OpenROAD-flow-scripts/flow/designs/sky130hd/vsdbabysoc/lef/avsdpll.lef
+read_lef /home/madank/OpenROAD-flow-scripts/flow/designs/sky130hd/vsdbabysoc/lef/avsddac.lef
+```
+
+Load the timing library file:
+
+```
+read_liberty /home/madank/OpenROAD-flow-scripts/flow/platforms/sky130hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+```
+
+Load the layout DEF:
+
+```
+read_def /home/madank/OpenROAD-flow-scripts/flow/results/sky130hd/vsdbabysoc/base/5_route.def
+```
+
+Before parasitic extraction, ensure the required models exist. Create the `external-resources/` directory inside `~/OpenROAD-flow-scripts/` and clone the open_pdks repository:
+
+```
+git clone https://github.com/RTimothyEdwards/open_pdks.git
+```
+
+Define the extraction model file.
+(*rewritten comment → “Assigning the model file used for the selected process corner”*):
+
+```
+define_process_corner -ext_model_index 0 /home/madank/OpenROAD-flow-scripts/external-resources/open_pdks/sky130/openlane/rules.openrcx.sky130A.nom.calibre
+```
+
+Extract parasitics.
+(*rewritten comment → “This performs RC extraction using the routed geometry”*):
+
+```
+extract_parasitics -ext_model_file /home/madank/OpenROAD-flow-scripts/external-resources/open_pdks/sky130/openlane/rules.openrcx.sky130A.nom.calibre
+```
+
+Write the SPEF file:
+
+```
+write_spef /home/madank/OpenROAD-flow-scripts/flow/designs/sky130hd/vsdbabysoc/vsdbabysoc.spef
+```
+
+Export the post-route Verilog netlist:
+
+```
+write_verilog /home/madank/OpenROAD-flow-scripts/flow/designs/sky130hd/vsdbabysoc/vsdbabysoc_post_place.v
+```
+
+![Alt text](images/terminal.png)
+
+The final `OpenROAD-flow-scripts/flow/designs/sky130hd/vsdbabysoc/` directory structure after RC extraction looks as follows:
+
+![Alt text](images/final.png)
+
+The generated SPEF file:
+
+![Alt text](images/spef_file.png)
+
+The generated Verilog netlist:
+
+![Alt text](images/v_file.png)
+
+
