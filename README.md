@@ -33,3 +33,6 @@
 | Day 5 | [Final steps for RTL2GDS using tritonRoute and openSTA](week6/day5/) |
 | [Week 7](week7/) |
 | Week 7 | [BabySoC Physical Design & Post-Route SPEF Generation](week7/README.md) |
+| [Week 8](week8/) |
+| Week 8 | [Layout STA and Timing Analysis Across PVT Corners for Routed VSDBabySoC](week8/README.md) |
+
