@@ -14,6 +14,18 @@ sudo ./setup.sh
 
 ![Alt text](images/build.png)
 
+> [!NOTE]
+> 
+> If you experience error while building OpenROAD-flow-scripts like this:
+>
+> ![image](images/error_during_installation.png)
+>
+> Try building OpenROAD-flow-scripts with this command instead:
+>
+> ```bash
+> ./build_openroad.sh --local --threads 1 --openroad-args "-DENABLE_TESTS=OFF"
+> ```
+
 After installation, verify the tools:
 
 ```
